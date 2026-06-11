@@ -1,4 +1,4 @@
-# Azure AI Community Board
+# Secure Agent AI Platform
 
 A learning-first full-stack Azure project for building a small AI-enabled community board.
 
