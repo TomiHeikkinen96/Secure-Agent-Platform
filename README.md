@@ -28,6 +28,7 @@ Application code has not been initialized yet. Future phases should use official
 - Project plan: [docs/plan.md](docs/plan.md)
 - Agent workflow: [AGENTS.md](AGENTS.md)
 - Workflow guide: [docs/workflow.md](docs/workflow.md)
+- Phase 00 setup guide: [docs/setup.md](docs/setup.md)
 - Architecture notes: [docs/architecture.md](docs/architecture.md)
 - Repository structure: [docs/repository-structure.md](docs/repository-structure.md)
 - Phase notes: [docs/phases](docs/phases)

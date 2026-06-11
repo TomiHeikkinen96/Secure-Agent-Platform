@@ -179,9 +179,11 @@ Simple charts optional.
 
 Goal:
 
-No local installation outside Docker.
+Learn the local full-stack toolchain and Docker workflow.
 
-Everything runs in containers.
+Application infrastructure should run in containers where practical, especially the database.
+
+Local Node.js and Python tooling is allowed when it helps learning.
 
 Repository:
 
@@ -192,7 +194,9 @@ Repository:
 
 Setup:
 
-docker-compose up
+Start with toolchain checks and official init commands.
+
+Use Docker Compose for local services.
 
 Services:
 

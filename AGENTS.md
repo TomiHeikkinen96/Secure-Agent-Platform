@@ -33,6 +33,7 @@ Agents must:
 - Provide the exact command for the user to run, explain what it does, and ask them to paste the result when useful.
 - Use agentic coding for syntax, wiring, tests, and troubleshooting, while preserving the user's hands-on setup experience.
 - Call out "Good to know" notes when a full-stack convention differs from embedded or systems development expectations.
+- Report transient local machine findings in chat first. Commit only durable project decisions, recommended baselines, setup notes, and security-relevant gotchas.
 
 Agents should not silently run long setup flows, create cloud resources, install global tools, or hide important environment details from the user.
 
@@ -63,6 +64,8 @@ The agent may edit generated files after the user has run an init command.
 
 Do not pre-create application directories that would conflict with official init tools unless the user asks.
 
+Use containers as the reproducible project baseline when they teach the deployment model or reduce host-machine drift. Local tools are still useful for learning the ecosystem, quick editor integration, and understanding what the container is replacing.
+
 ## Recommended Stack Path
 
 Use this default path unless the user changes direction:
@@ -70,13 +73,20 @@ Use this default path unless the user changes direction:
 - Frontend: React with Vite first.
 - Optional later learning phase: Next.js comparison or migration spike, after plain React basics are understood.
 - Backend: FastAPI.
-- Python environment: start with familiar `venv` and `pip` concepts when explaining Python packaging. Consider `uv` as an optional modern tooling note or later improvement, not as required early knowledge.
+- Python environment: start with familiar `venv` and `pip` concepts when explaining Python packaging. Prefer Python 3.12+ or a documented container baseline for new backend work. Consider `uv` as an optional modern tooling note or later improvement, not as required early knowledge.
 - Database: SQL Server in Docker for local development, to stay close to Azure SQL while avoiding an always-running local database service.
 - Cloud: Azure App Service first, AKS only near the end.
 
 ## Docker and Local Services
 
 Local databases and infrastructure services should be containerized.
+
+For Node and Python application work:
+
+- Prefer local official init commands when the learning value is high.
+- Prefer Dockerfiles and Docker Compose for reproducible runs, CI parity, and dependency isolation.
+- Explain how commands can be run inside containers and how generated files/artifacts appear through bind mounts or copied build outputs.
+- Do not treat containers as a complete security boundary. They reduce host pollution and provide process/filesystem isolation, but dependency scripts can still affect mounted project files and use network access.
 
 For SQL Server:
 
@@ -200,4 +210,3 @@ At the end of a phase, agents must provide:
 - Suggested commit message
 - Suggested tag, if appropriate
 - Recommended next phase
-
