@@ -25,7 +25,7 @@ Application code has not been initialized yet. Future phases should use official
 
 ## Documentation
 
-- Project plan: [docs/plan.md](plan.md)
+- Project plan: [docs/plan.md](docs/plan.md)
 - Agent workflow: [AGENTS.md](AGENTS.md)
 - Workflow guide: [docs/workflow.md](docs/workflow.md)
 - Architecture notes: [docs/architecture.md](docs/architecture.md)
