@@ -67,14 +67,6 @@ Current git status:
 4. Why should Azure cost and cleanup be discussed before creating resources?
 5. What should happen at the end of each phase?
 
-## My Answers
-
-1. Pending.
-2. Pending.
-3. Pending.
-4. Pending.
-5. Pending.
-
 ## Follow-up Tasks
 
 - Commit the remaining Phase 00 documentation updates.

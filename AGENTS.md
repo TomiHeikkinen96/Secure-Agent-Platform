@@ -34,6 +34,7 @@ Agents must:
 - Use agentic coding for syntax, wiring, tests, and troubleshooting, while preserving the user's hands-on setup experience.
 - Call out "Good to know" notes when a full-stack convention differs from embedded or systems development expectations.
 - Report transient local machine findings in chat first. Commit only durable project decisions, recommended baselines, setup notes, and security-relevant gotchas.
+- Keep public documentation lean. Avoid committing chat transcripts, temporary confusion, personal scratch answers, or placeholder sections.
 
 Agents should not silently run long setup flows, create cloud resources, install global tools, or hide important environment details from the user.
 
@@ -147,7 +148,7 @@ Deployment automation should come after the app can run locally and after Azure 
 
 Use GitHub Actions by default.
 
-## Documentation Requirements
+## Documentation Timing
 
 Every completed phase should create or update a document in:
 
@@ -163,6 +164,14 @@ Examples:
 - `phase01_backend_foundation.md`
 - `phase02_react_frontend.md`
 
+Update phase documentation:
+
+- At the start of a phase, only if a new phase document or checklist is useful.
+- During a phase, only for durable decisions, commands that matter, architecture notes, or follow-up tasks.
+- At the end of a phase, always update the phase summary, verification notes, lessons, quiz, and follow-up tasks.
+
+Do not update phase docs after every small chat exchange. Keep transient debugging, local terminal oddities, and the user's quiz answers in chat unless the user explicitly asks to commit them.
+
 Each phase document should include:
 
 - Summary
@@ -172,8 +181,9 @@ Each phase document should include:
 - Good To Know
 - Portfolio Talking Points
 - Quiz
-- My Answers
 - Follow-up Tasks
+
+The Quiz section should contain questions only. If the user wants to practice, the practice should be done in different chat window specifically meant for the quiz and review.
 
 Because this is a public repository, use "Portfolio Talking Points" instead of private interview coaching language. It is fine for the repository to show deliberate learning, but avoid writing fake expertise or overly personal notes.
 

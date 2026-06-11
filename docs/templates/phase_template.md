@@ -30,11 +30,6 @@ Short description of the phase goal and outcome.
 
 1. Question?
 
-## My Answers
-
-1. Answer.
-
 ## Follow-up Tasks
 
 - Anything intentionally deferred.
-
