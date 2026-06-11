@@ -1,0 +1,203 @@
+# Agent Instructions
+
+This repository is a learning-first portfolio project. The application matters, but the main outcome is that the human can explain the stack, the tradeoffs, the setup, and the deployment path in an AI Engineer interview.
+
+## Project Goal
+
+Build an Azure-hosted full-stack AI community board that demonstrates:
+
+- React frontend development
+- FastAPI backend development
+- Authentication and authorization with Microsoft Entra ID
+- Azure SQL
+- Docker and Docker Compose
+- Azure AI Foundry integration
+- Basic RAG
+- Monitoring with Azure Monitor and Application Insights
+- Secret management with Azure Key Vault
+- CI/CD through GitHub Actions
+- A later AKS deployment phase
+
+The project is intentionally small. Avoid expanding product scope unless the user explicitly asks.
+
+## Collaboration Style
+
+The user is an experienced embedded software engineer learning modern full-stack and Azure development. Treat them like a capable peer entering a different ecosystem.
+
+Agents must:
+
+- Explain full-stack concepts as they appear, especially Node, React, FastAPI, Docker, OAuth/OIDC, Azure networking, CI/CD, and cloud cost/security tradeoffs.
+- Prefer short, contained work sessions over long autonomous runs.
+- Stop at phase boundaries with a recap, suggested git commit, and next-step options.
+- Keep the human in the loop for setup, init commands, cloud resource creation, Docker commands, and deployment commands.
+- Provide the exact command for the user to run, explain what it does, and ask them to paste the result when useful.
+- Use agentic coding for syntax, wiring, tests, and troubleshooting, while preserving the user's hands-on setup experience.
+- Call out "Good to know" notes when a full-stack convention differs from embedded or systems development expectations.
+
+Agents should not silently run long setup flows, create cloud resources, install global tools, or hide important environment details from the user.
+
+## Anti-Drift Rule
+
+Stay within the current phase unless the user explicitly approves a scope change.
+
+Before adding a new technology, service, library, architectural pattern, or workflow, explain:
+
+- Why it is needed now
+- What it teaches
+- What complexity it adds
+- Whether it can wait for a later phase
+
+If the idea is useful but not needed yet, document it under follow-up tasks instead of implementing it.
+
+## Setup Philosophy
+
+Prefer official initialization commands over hand-written scaffolding when learning value exists.
+
+Examples:
+
+- For React, guide the user through `npm create vite@latest` when starting the frontend.
+- For FastAPI, explain the package setup and project structure before creating files.
+- For Docker, guide the user through `docker compose up`, `docker compose down`, logs, ports, volumes, and service names.
+
+The agent may edit generated files after the user has run an init command.
+
+Do not pre-create application directories that would conflict with official init tools unless the user asks.
+
+## Recommended Stack Path
+
+Use this default path unless the user changes direction:
+
+- Frontend: React with Vite first.
+- Optional later learning phase: Next.js comparison or migration spike, after plain React basics are understood.
+- Backend: FastAPI.
+- Python environment: start with familiar `venv` and `pip` concepts when explaining Python packaging. Consider `uv` as an optional modern tooling note or later improvement, not as required early knowledge.
+- Database: SQL Server in Docker for local development, to stay close to Azure SQL while avoiding an always-running local database service.
+- Cloud: Azure App Service first, AKS only near the end.
+
+## Docker and Local Services
+
+Local databases and infrastructure services should be containerized.
+
+For SQL Server:
+
+- Prefer Docker Compose.
+- Explain container lifecycle clearly.
+- Make it clear that `docker compose down` stops services.
+- Explain named volumes if data persists across restarts.
+- Explain how to remove volumes when the user wants a full reset.
+
+Avoid requiring always-on local services.
+
+## Azure Cost and Risk Rule
+
+Before creating or guiding creation of Azure resources, agents must provide:
+
+- Expected resource types
+- Rough cost/risk notes
+- Free tier or credit considerations when relevant
+- Cleanup instructions
+- Secret/security considerations
+
+Assume the user may use Azure trial credits, but still teach cost awareness.
+
+## Git Workflow
+
+Preferred public repo workflow:
+
+- `main`: stable branch, CI/CD deployment source
+- `develop`: integration and learning branch
+- feature branches: optional for larger phase work
+
+At the end of each phase, suggest:
+
+- Files changed
+- Tests or checks run
+- A commit message
+- Whether to tag the phase
+
+Suggested tag format:
+
+- `phase-00-agentic-workflow`
+- `phase-01-backend-foundation`
+- `phase-02-react-frontend`
+
+Do not run destructive git commands. If the repository has not been initialized, guide the user through `git init`, branch setup, and first commit.
+
+## CI/CD Guidance
+
+Introduce CI/CD incrementally.
+
+Early CI should verify:
+
+- Backend formatting/linting/tests when backend exists
+- Frontend build/tests when frontend exists
+- Docker Compose validation when compose files exist
+
+Deployment automation should come after the app can run locally and after Azure resource choices are understood.
+
+Use GitHub Actions by default.
+
+## Documentation Requirements
+
+Every completed phase should create or update a document in:
+
+`docs/phases/`
+
+Naming format:
+
+`phaseXX_short_description.md`
+
+Examples:
+
+- `phase00_agentic_workflow_setup.md`
+- `phase01_backend_foundation.md`
+- `phase02_react_frontend.md`
+
+Each phase document should include:
+
+- Summary
+- What Changed
+- Commands I Ran
+- What I Learned
+- Good To Know
+- Portfolio Talking Points
+- Quiz
+- My Answers
+- Follow-up Tasks
+
+Because this is a public repository, use "Portfolio Talking Points" instead of private interview coaching language. It is fine for the repository to show deliberate learning, but avoid writing fake expertise or overly personal notes.
+
+## Testing and Verification
+
+Agents should verify changes with the narrowest useful checks.
+
+Examples:
+
+- Backend: unit tests, FastAPI route checks, OpenAPI/Swagger sanity check
+- Frontend: build, component tests when present, browser smoke test
+- Docker: `docker compose config`, service startup, logs
+- CI: GitHub Actions workflow syntax and local equivalents when possible
+
+If a check cannot be run, say why and document the residual risk.
+
+## Secrets and Public Repository Safety
+
+Never commit secrets.
+
+Use `.env.example` for required configuration names and placeholder values.
+
+Use local `.env` files only when ignored by git.
+
+For Azure phases, prefer managed identities and Key Vault when the phase introduces them.
+
+## Phase Stop Checklist
+
+At the end of a phase, agents must provide:
+
+- Short recap
+- Verification results
+- Phase document location
+- Suggested commit message
+- Suggested tag, if appropriate
+- Recommended next phase
+
