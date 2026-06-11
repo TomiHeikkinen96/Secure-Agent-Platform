@@ -82,3 +82,4 @@ Phase documents should be written in a public-friendly way. Good:
 
 Avoid making notes sound like private interview coaching or pretending that future knowledge has already been mastered.
 
+Quiz answers can stay in chat while practicing. Commit answer sections only when they are intentionally polished as public study notes.

@@ -28,13 +28,22 @@ Short description of the phase goal and outcome.
 
 ## Quiz
 
+### Conceptual
+
 1. Question?
 
-## My Answers
+### Architecture
 
-1. Answer.
+1. Question?
+
+### Implementation
+
+1. Question?
+
+### Operations
+
+1. Question?
 
 ## Follow-up Tasks
 
 - Anything intentionally deferred.
-
