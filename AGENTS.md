@@ -183,7 +183,14 @@ Each phase document should include:
 - Quiz
 - Follow-up Tasks
 
-The Quiz section should contain questions only. If the user wants to practice, the practice should be done in different chat window specifically meant for the quiz and review.
+The Quiz section should contain questions only. Organize quiz questions by learning depth when a phase introduces several concepts:
+
+- Conceptual: broad ideas, tradeoffs, and why a technology exists.
+- Architecture: how services, boundaries, data flow, and deployment choices fit together.
+- Implementation: concrete files, commands, code paths, and framework conventions.
+- Operations: running, debugging, resetting, and verifying the system.
+
+If a phase is very small, a single quiz list is fine. If the user wants to practice, the practice should be done in different chat window specifically meant for the quiz and review.
 
 Because this is a public repository, use "Portfolio Talking Points" instead of private interview coaching language. It is fine for the repository to show deliberate learning, but avoid writing fake expertise or overly personal notes.
 
