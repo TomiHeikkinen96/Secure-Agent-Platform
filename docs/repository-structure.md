@@ -1,6 +1,6 @@
 # Repository Structure
 
-See [README.md](../README.md) for current local commands.
+See [scripts/README.md](../scripts/README.md) for current local commands.
 
 ## Directory Responsibilities
 

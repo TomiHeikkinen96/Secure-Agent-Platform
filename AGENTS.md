@@ -35,7 +35,7 @@ Agents must:
 - Call out "Good to know" notes when a full-stack convention differs from embedded or systems development expectations.
 - Report transient local machine findings in chat first. Commit only durable project decisions, recommended baselines, setup notes, and security-relevant gotchas.
 - Keep public documentation lean. Avoid committing chat transcripts, temporary confusion, personal scratch answers, or placeholder sections.
-- Keep mutable project state in one place: `README.md`. Current phase, active workflow, setup commands, reset commands, and local lifecycle notes belong there. Other docs should point to the README instead of duplicating those details.
+- Keep mutable project state in one place: `README.md`. Current phase and public quickstart belong there. Detailed local script and reset behavior belongs in `scripts/README.md`. Other docs should point instead of duplicating those details.
 
 Agents should not silently run long setup flows, create cloud resources, install global tools, install host-local project dependencies, or hide important environment details from the user.
 
@@ -155,7 +155,8 @@ Use GitHub Actions by default.
 
 Documentation should avoid repeated mutable state. Prefer:
 
-- `README.md` for current phase, setup, local commands, and state/reset instructions.
+- `README.md` for current phase and public quickstart.
+- `scripts/README.md` for local command variants and state/reset instructions.
 - `docs/plan.md` for the durable roadmap, not completed/current status.
 - `docs/phases/` for historical phase summaries: what changed, what was verified, what was learned.
 - Pointer links instead of duplicated setup or workflow instructions.

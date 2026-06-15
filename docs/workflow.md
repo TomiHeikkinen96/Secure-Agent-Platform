@@ -22,7 +22,7 @@ This is especially important for:
 
 ## Branch Strategy
 
-See [README.md](../README.md) for the active branch and current local commands.
+See [README.md](../README.md) for the current phase and [scripts/README.md](../scripts/README.md) for local commands.
 
 Default flow:
 

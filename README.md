@@ -23,13 +23,16 @@ Phase 04 - Auth Concepts Spike
 
 ## Local Development
 
-After creating `.env` from `.env.example`, use the root launchers:
+Requirements: Docker Desktop with Linux containers enabled.
+
+For a clean local review run:
 
 ```text
-dev-start.cmd
+copy .env.example .env
+dev-fresh.cmd
 ```
 
-The start launcher starts the Docker Compose stack, creates the local database if needed, applies migrations, seeds development data, opens the frontend, and shows a ready screen. Press `Ctrl+C` in the launcher window to stop the stack gracefully.
+`dev-fresh.cmd` asks for confirmation, resets this project's local Docker volumes, runs checks, starts the stack, applies migrations, seeds data, and opens the frontend.
 
 The frontend service installs npm dependencies inside the `node:22-bookworm` container and stores them in the `frontend-node-modules` Docker volume. You do not need to run host-local `npm install` for normal development.
 
@@ -49,70 +52,7 @@ Default local URLs:
 - Backend Swagger UI: `http://localhost:8000/docs`
 - Backend health: `http://localhost:8000/health`
 
-After startup, the launcher shows a ready screen and waits. Keep that window open while developing, then press `Ctrl+C` in the launcher window to stop the stack.
-
-For terminal use instead of double-clicking:
-
-```powershell
-.\scripts\start-dev.ps1
-```
-
-To start without opening browser tabs:
-
-```powershell
-.\scripts\start-dev.ps1 -NoBrowser
-```
-
-To follow frontend/backend logs in the launcher window:
-
-```powershell
-.\scripts\start-dev.ps1 -FollowLogs
-```
-
-To run containerized frontend dependency, lint, and production build checks without starting the app:
-
-```powershell
-.\dev-build.cmd
-```
-
-To run checks and then start the app in one PowerShell session:
-
-```powershell
-.\scripts\start-dev.ps1 -RunChecks
-```
-
-Local host ports can be changed in `.env`:
-
-```text
-FRONTEND_HOST_PORT=5173
-BACKEND_HOST_PORT=8000
-MSSQL_HOST_PORT=1433
-```
-
-The internal container ports stay fixed so services can still reach each other by Compose service name.
-
-Local state is stored in Docker named volumes:
-
-- `sqlserver-data`: SQL Server database files, including posts and comments.
-- `frontend-node-modules`: frontend npm dependencies installed inside the container.
-
-Normal `docker compose down` or stopping the launcher removes containers and the network, but keeps those volumes. That is why posts and comments survive restarts.
-
-To wipe local Docker volumes and start from empty database/dependency state:
-
-```powershell
-.\dev-clean.cmd
-```
-
-This asks for confirmation, then deletes local SQL Server data and the frontend dependency volume. The next launcher run recreates, migrates, seeds the database, and reinstalls frontend dependencies in Docker.
-
-For a full fresh review run:
-
-```powershell
-.\dev-fresh.cmd
-```
-
-This asks for confirmation, deletes local Docker volumes, runs the same checks as `dev-build.cmd`, then starts the app from seeded data.
+For PowerShell variants and Docker volume safety notes, see [scripts/README.md](scripts/README.md).
 
 ## Documentation
 

@@ -59,7 +59,7 @@ Future AI features:
 
 ## Phase Roadmap
 
-See [README.md](../README.md) for the current phase and local setup commands.
+See [README.md](../README.md) for the current phase and [scripts/README.md](../scripts/README.md) for local setup commands.
 
 ### Phase 03 - Frontend Write Flows
 
