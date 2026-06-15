@@ -19,19 +19,31 @@ This repository is intentionally public and educational. The app is small so the
 
 ## Current Status
 
-The repository is on the `develop` learning branch with backend, database, and frontend foundations being introduced phase by phase.
+Development currently happens directly on `main` to keep the solo learning workflow simple. A separate integration branch can be added later if CI/CD or team collaboration makes that useful.
 
-The frontend phase has started with a Vite React scaffold and a Docker Compose service for running the local Vite development server. Future phases should continue using official setup commands where useful so the setup process remains part of the learning.
+The project currently has a FastAPI backend, local SQL Server through Docker Compose, and a Vite React frontend that can read and write board data. Future phases should continue using official setup commands where useful so the setup process remains part of the learning.
 
 ## Local Development
 
-After creating `.env` from `.env.example`, use the root launcher:
+After creating `.env` from `.env.example`, use the root launchers:
 
 ```text
-start-dev.cmd
+dev-start.cmd
 ```
 
-The launcher starts the Docker Compose stack, creates the local database if needed, applies migrations, seeds development data, opens the frontend, and shows a ready screen. Press `Ctrl+C` in the launcher window to stop the stack gracefully.
+The start launcher starts the Docker Compose stack, creates the local database if needed, applies migrations, seeds development data, opens the frontend, and shows a ready screen. Press `Ctrl+C` in the launcher window to stop the stack gracefully.
+
+The frontend service installs npm dependencies inside the `node:22-bookworm` container and stores them in the `frontend-node-modules` Docker volume. You do not need to run host-local `npm install` for normal development.
+
+Common local commands:
+
+| Command | Purpose |
+| --- | --- |
+| `dev-start.cmd` | Start the local app for normal development. |
+| `dev-build.cmd` | Run containerized frontend dependency, lint, and production build checks without starting the app. |
+| `dev-clean.cmd` | Stop containers and delete local Docker volumes after confirmation. |
+| `dev-fresh.cmd` | Delete local Docker volumes after confirmation, run checks, then start the app. |
+| `start-dev.cmd` | Same as `dev-start.cmd`; kept as the older start alias. |
 
 Default local URLs:
 
@@ -59,6 +71,18 @@ To follow frontend/backend logs in the launcher window:
 .\scripts\start-dev.ps1 -FollowLogs
 ```
 
+To run containerized frontend dependency, lint, and production build checks without starting the app:
+
+```powershell
+.\dev-build.cmd
+```
+
+To run checks and then start the app in one PowerShell session:
+
+```powershell
+.\scripts\start-dev.ps1 -RunChecks
+```
+
 Local host ports can be changed in `.env`:
 
 ```text
@@ -69,13 +93,28 @@ MSSQL_HOST_PORT=1433
 
 The internal container ports stay fixed so services can still reach each other by Compose service name.
 
-To wipe local Docker volumes and start from empty database state:
+Local state is stored in Docker named volumes:
+
+- `sqlserver-data`: SQL Server database files, including posts and comments.
+- `frontend-node-modules`: frontend npm dependencies installed inside the container.
+
+Normal `docker compose down` or stopping the launcher removes containers and the network, but keeps those volumes. That is why posts and comments survive restarts.
+
+To wipe local Docker volumes and start from empty database/dependency state:
 
 ```powershell
-.\scripts\reset-local-data.ps1
+.\dev-clean.cmd
 ```
 
-This deletes local SQL Server data and the frontend dependency volume. The next launcher run recreates, migrates, and seeds the database.
+This asks for confirmation, then deletes local SQL Server data and the frontend dependency volume. The next launcher run recreates, migrates, seeds the database, and reinstalls frontend dependencies in Docker.
+
+For a full fresh review run:
+
+```powershell
+.\dev-fresh.cmd
+```
+
+This asks for confirmation, deletes local Docker volumes, runs the same checks as `dev-build.cmd`, then starts the app from seeded data.
 
 ## Documentation
 

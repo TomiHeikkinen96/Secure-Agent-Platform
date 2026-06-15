@@ -36,7 +36,7 @@ Agents must:
 - Report transient local machine findings in chat first. Commit only durable project decisions, recommended baselines, setup notes, and security-relevant gotchas.
 - Keep public documentation lean. Avoid committing chat transcripts, temporary confusion, personal scratch answers, or placeholder sections.
 
-Agents should not silently run long setup flows, create cloud resources, install global tools, or hide important environment details from the user.
+Agents should not silently run long setup flows, create cloud resources, install global tools, install host-local project dependencies, or hide important environment details from the user.
 
 ## Anti-Drift Rule
 
@@ -87,6 +87,10 @@ For Node and Python application work:
 - Prefer local official init commands when the learning value is high.
 - Prefer Dockerfiles and Docker Compose for reproducible runs, CI parity, and dependency isolation.
 - Explain how commands can be run inside containers and how generated files/artifacts appear through bind mounts or copied build outputs.
+- Do not run host-local dependency installation commands such as `npm install`, `pip install`, or global tool installs for normal project work unless the user explicitly asks for that local setup path.
+- For the React frontend, use the containerized workflow as the baseline. `dev-start.cmd` / `scripts/start-dev.ps1` starts the Compose `frontend` service, which runs `npm install` inside the `node:22-bookworm` container and stores dependencies in the `frontend-node-modules` Docker volume.
+- For frontend checks, prefer the standardized launcher command `.\dev-build.cmd`, or `.\scripts\start-dev.ps1 -ChecksOnly` from PowerShell. If Docker Desktop is not running or the command cannot be executed, stop and ask the user to run the command rather than falling back to host-local installs.
+- For a destructive fresh-state review, use `.\dev-fresh.cmd`. Explain that it deletes local Docker volumes before running checks and starting the app. Do not use it casually when preserving local posts/comments matters.
 - Do not treat containers as a complete security boundary. They reduce host pollution and provide process/filesystem isolation, but dependency scripts can still affect mounted project files and use network access.
 
 For SQL Server:
@@ -113,10 +117,10 @@ Assume the user may use Azure trial credits, but still teach cost awareness.
 
 ## Git Workflow
 
-Preferred public repo workflow:
+Preferred public repo workflow for now:
 
-- `main`: stable branch, CI/CD deployment source
-- `develop`: integration and learning branch
+- `main`: active solo development branch and future CI/CD deployment source
+- `develop`: optional later integration branch if CI/CD, deployment gating, or collaboration creates a real need
 - feature branches: optional for larger phase work
 
 At the end of each phase, suggest:

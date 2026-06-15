@@ -2,7 +2,9 @@
 param(
     [switch]$ResetData,
     [switch]$NoBrowser,
-    [switch]$FollowLogs
+    [switch]$FollowLogs,
+    [switch]$RunChecks,
+    [switch]$ChecksOnly
 )
 
 $ErrorActionPreference = "Stop"
@@ -156,6 +158,12 @@ function Open-LocalUrl {
     Start-Process $Url
 }
 
+function Invoke-FrontendChecks {
+    Write-Host "Running frontend dependency, lint, and build checks in Docker..."
+    Write-Host "This uses the Compose frontend service and the frontend-node-modules volume."
+    Invoke-Compose run --rm --no-deps frontend sh -c "npm install && npm run lint && npm run build"
+}
+
 function Show-ReadyScreen {
     param(
         [string]$FrontendUrl,
@@ -187,6 +195,9 @@ function Show-ReadyScreen {
     Write-Host "For logs in another terminal:"
     Write-Host "  docker compose logs --follow frontend backend"
     Write-Host ""
+    Write-Host "For containerized frontend checks:"
+    Write-Host "  .\dev-build.cmd"
+    Write-Host ""
 }
 
 try {
@@ -210,6 +221,12 @@ try {
         Invoke-Compose down -v --remove-orphans
     }
 
+    if ($ChecksOnly) {
+        Invoke-FrontendChecks
+        Write-Host "Checks completed. Not starting the development stack because ChecksOnly was requested."
+        return
+    }
+
     Write-Host "Building the backend image used by setup helpers..."
     Invoke-Compose build backend
 
@@ -225,6 +242,10 @@ try {
 
     Write-Host "Loading development seed data..."
     Invoke-Compose run --rm backend python -m app.seed_dev
+
+    if ($RunChecks) {
+        Invoke-FrontendChecks
+    }
 
     Write-Host "Starting frontend, backend, and database..."
     Invoke-Compose up -d --build frontend
