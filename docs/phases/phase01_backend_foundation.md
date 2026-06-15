@@ -102,8 +102,3 @@ Manual verification completed:
 5. How would you wipe only the local database state and start fresh?
 6. How would you test `POST /posts` manually with Swagger UI or Postman?
 7. How would you confirm that a migration has been applied?
-
-## Follow-up Tasks
-
-- Add likes in a later migration when the feed behavior needs it.
-- Add automated backend tests after the first manual backend workflow is understood.

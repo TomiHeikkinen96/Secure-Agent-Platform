@@ -17,11 +17,9 @@ This repository is intentionally public and educational. The app is small so the
 - Practice CI/CD and production-minded checks.
 - Keep phase-by-phase notes, quizzes, and portfolio talking points.
 
-## Current Status
+## Current Phase
 
-Development currently happens directly on `main` to keep the solo learning workflow simple. A separate integration branch can be added later if CI/CD or team collaboration makes that useful.
-
-The project currently has a FastAPI backend, local SQL Server through Docker Compose, and a Vite React frontend that can read and write board data. Future phases should continue using official setup commands where useful so the setup process remains part of the learning.
+Phase 04 - Auth Concepts Spike
 
 ## Local Development
 
@@ -118,10 +116,9 @@ This asks for confirmation, deletes local Docker volumes, runs the same checks a
 
 ## Documentation
 
-- Project plan: [docs/plan.md](docs/plan.md)
+- Roadmap: [docs/plan.md](docs/plan.md)
 - Agent workflow: [AGENTS.md](AGENTS.md)
 - Workflow guide: [docs/workflow.md](docs/workflow.md)
-- Phase 00 setup guide: [docs/setup.md](docs/setup.md)
 - Architecture notes: [docs/architecture.md](docs/architecture.md)
 - Repository structure: [docs/repository-structure.md](docs/repository-structure.md)
 - Phase notes: [docs/phases](docs/phases)

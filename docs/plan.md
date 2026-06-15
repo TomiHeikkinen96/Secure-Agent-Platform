@@ -57,23 +57,9 @@ Future AI features:
 - summarize a discussion
 - analyze an author's previous activity with a small RAG flow
 
-## Current Baseline
-
-Completed:
-
-- Phase 00: repository workflow and agent instructions
-- Phase 01: FastAPI backend, SQL Server container, migrations, seed data
-- Phase 02: Vite React frontend, read-only API explorer, standardized local launcher
-
-Standard local start:
-
-```text
-start-dev.cmd
-```
-
-The launcher is the supported local workflow. It starts Docker Compose, creates/migrates/seeds the local database, opens the frontend, and cleans up containers with `Ctrl+C`.
-
 ## Phase Roadmap
+
+See [README.md](../README.md) for the current phase and local setup commands.
 
 ### Phase 03 - Frontend Write Flows
 

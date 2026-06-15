@@ -43,7 +43,3 @@ Short description of the phase goal and outcome.
 ### Operations
 
 1. Question?
-
-## Follow-up Tasks
-
-- Anything intentionally deferred.

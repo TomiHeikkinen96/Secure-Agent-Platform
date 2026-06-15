@@ -22,26 +22,22 @@ This is especially important for:
 
 ## Branch Strategy
 
-Use:
+See [README.md](../README.md) for the active branch and current local commands.
 
-- `main` for stable work and future deployment triggers.
-- `develop` for active integration and learning.
+Default flow:
 
-Suggested flow:
-
-1. Work on `develop`.
+1. Work on the active branch named in the README.
 2. Finish a phase.
 3. Run checks.
 4. Write or update the phase document.
 5. Commit with a clear phase-oriented message.
-6. Merge to `main` when the phase is stable.
-7. Tag important milestones.
+6. Tag important milestones when useful.
 
-Suggested tags:
+Tag format:
 
-- `phase-00-agentic-workflow`
-- `phase-01-backend-foundation`
-- `phase-02-react-frontend`
+```text
+phase-XX-short-description
+```
 
 ## Commit Guidance
 
@@ -67,7 +63,7 @@ Add CI/CD gradually:
 2. Backend tests and linting when FastAPI exists.
 3. Frontend build and tests when React exists.
 4. Docker Compose validation when compose files exist.
-5. Deployment from `main` after local and Azure resource setup are understood.
+5. Deployment from the configured deployment branch after local and Azure resource setup are understood.
 
 The goal is not only automation. The goal is to understand what each automated check protects.
 

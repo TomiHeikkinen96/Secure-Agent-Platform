@@ -24,13 +24,6 @@ docker --version
 az --version
 ```
 
-Current git status:
-
-- Repository is initialized.
-- Current branch is `develop`.
-- `develop` tracks `origin/develop`.
-- `main` and `origin/main` exist.
-
 ## What I Learned
 
 - The project should start with plain React and Vite before considering Next.js.
@@ -44,12 +37,11 @@ Current git status:
 
 - A public repository can include learning notes if they are framed professionally.
 - "Portfolio Talking Points" is a better public heading than private interview notes.
-- `main` can represent stable work and future deployment triggers, while `develop` can hold active learning work.
 - Future agents should avoid doing setup invisibly. The setup itself is part of the learning.
 - On Windows PowerShell, `npm.cmd` may work even when `npm` is blocked by script execution policy.
 - Node `v22.20.0` is acceptable for this project because it is on an LTS line.
 - Python `3.10.6` can remain installed locally, but the project should target Python 3.12+ or a newer backend container baseline.
-- Docker is available and `docker run hello-world` passed, so the local container runtime is ready for the next phase.
+- Docker was available and `docker run hello-world` passed during setup verification.
 - Azure CLI is not required for the first local phases. Azure Cloud Shell can provide browser-based Azure CLI access for early Azure exploration.
 - Containers help isolate and reproduce development environments, but mounted files and dependency scripts still need normal security caution.
 
@@ -63,14 +55,6 @@ Current git status:
 
 1. Why start with plain React and Vite before considering Next.js?
 2. Why use SQL Server in Docker instead of installing a local database service?
-3. What is the purpose of keeping `main` and `develop` separate?
+3. Why should a project choose a simple branch workflow before adding CI/CD complexity?
 4. Why should Azure cost and cleanup be discussed before creating resources?
 5. What should happen at the end of each phase?
-
-## Follow-up Tasks
-
-- Commit the remaining Phase 00 documentation updates.
-- Tag Phase 00 if desired.
-- Install Azure CLI before scripted local Azure work, or use Azure Cloud Shell during early cloud exploration.
-- Start Phase 01 with backend foundation or adjust numbering if Phase 0 will also include local tooling checks.
-- Add CI once there is code or documentation validation worth automating.

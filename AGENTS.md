@@ -35,6 +35,7 @@ Agents must:
 - Call out "Good to know" notes when a full-stack convention differs from embedded or systems development expectations.
 - Report transient local machine findings in chat first. Commit only durable project decisions, recommended baselines, setup notes, and security-relevant gotchas.
 - Keep public documentation lean. Avoid committing chat transcripts, temporary confusion, personal scratch answers, or placeholder sections.
+- Keep mutable project state in one place: `README.md`. Current phase, active workflow, setup commands, reset commands, and local lifecycle notes belong there. Other docs should point to the README instead of duplicating those details.
 
 Agents should not silently run long setup flows, create cloud resources, install global tools, install host-local project dependencies, or hide important environment details from the user.
 
@@ -117,11 +118,9 @@ Assume the user may use Azure trial credits, but still teach cost awareness.
 
 ## Git Workflow
 
-Preferred public repo workflow for now:
+Use the active checked-out git branch unless the user asks for a branch change. Do not duplicate branch policy across docs.
 
-- `main`: active solo development branch and future CI/CD deployment source
-- `develop`: optional later integration branch if CI/CD, deployment gating, or collaboration creates a real need
-- feature branches: optional for larger phase work
+Feature branches are optional for larger phase work.
 
 At the end of each phase, suggest:
 
@@ -132,9 +131,9 @@ At the end of each phase, suggest:
 
 Suggested tag format:
 
-- `phase-00-agentic-workflow`
-- `phase-01-backend-foundation`
-- `phase-02-react-frontend`
+```text
+phase-XX-short-description
+```
 
 Do not run destructive git commands. If the repository has not been initialized, guide the user through `git init`, branch setup, and first commit.
 
@@ -154,6 +153,15 @@ Use GitHub Actions by default.
 
 ## Documentation Timing
 
+Documentation should avoid repeated mutable state. Prefer:
+
+- `README.md` for current phase, setup, local commands, and state/reset instructions.
+- `docs/plan.md` for the durable roadmap, not completed/current status.
+- `docs/phases/` for historical phase summaries: what changed, what was verified, what was learned.
+- Pointer links instead of duplicated setup or workflow instructions.
+
+When a command or workflow changes, update the README and only update other docs if they are historically describing the phase that introduced the change.
+
 Every completed phase should create or update a document in:
 
 `docs/phases/`
@@ -171,8 +179,8 @@ Examples:
 Update phase documentation:
 
 - At the start of a phase, only if a new phase document or checklist is useful.
-- During a phase, only for durable decisions, commands that matter, architecture notes, or follow-up tasks.
-- At the end of a phase, always update the phase summary, verification notes, lessons, quiz, and follow-up tasks.
+- During a phase, only for durable decisions, commands that matter, or architecture notes.
+- At the end of a phase, update the phase summary, verification notes, lessons, and quiz.
 
 Do not update phase docs after every small chat exchange. Keep transient debugging, local terminal oddities, and the user's quiz answers in chat unless the user explicitly asks to commit them.
 
@@ -185,7 +193,6 @@ Each phase document should include:
 - Good To Know
 - Portfolio Talking Points
 - Quiz
-- Follow-up Tasks
 
 The Quiz section should contain questions only. Organize quiz questions by learning depth when a phase introduces several concepts:
 
@@ -230,4 +237,3 @@ At the end of a phase, agents must provide:
 - Phase document location
 - Suggested commit message
 - Suggested tag, if appropriate
-- Recommended next phase

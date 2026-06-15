@@ -14,7 +14,6 @@ This phase keeps authentication deliberately simple by using a seeded-user selec
 - Added create-comment forms under each post, hidden behind an `Add comment` toggle until needed.
 - Added client-side empty-content validation, character counts, disabled states, and API error display.
 - Kept the backend and database schema unchanged because the required write endpoints already existed.
-- Updated `README.md` to describe the simpler `main`-first solo development workflow.
 - Updated `AGENTS.md` so agents keep frontend dependency installation containerized through Docker Compose instead of using host-local `npm install`.
 - Added `dev-start.cmd`, `dev-build.cmd`, `dev-clean.cmd`, and `dev-fresh.cmd` wrappers for the common local lifecycle.
 - Added `-RunChecks` and `-ChecksOnly` support to the local launcher so frontend dependency, lint, and build checks can run through the standard Docker workflow.
@@ -51,13 +50,13 @@ npm run build passed
 - A controlled input stores form text in React state and updates that state on every edit.
 - A submit handler usually calls `event.preventDefault()` so the browser does not reload the page.
 - The browser sends JSON to FastAPI by using `fetch` with `method: 'POST'`, a `Content-Type: application/json` header, and a serialized request body.
-- The frontend still needs to send `author_id` before real authentication exists, so the seeded-user selector is a temporary development adapter.
+- The seeded-user selector supplies `author_id` so the form payload matches the existing API schema.
 - After a successful write, the simplest correct state strategy is to reload the board snapshot from the backend.
 - FastAPI validation errors can come back as structured JSON, so the API client should turn those responses into readable frontend messages.
 
 ## Good To Know
 
-- The seeded-user selector is not security. It is only a teaching bridge until Microsoft Entra authentication replaces it.
+- The seeded-user selector is not security. It only supplies an author id for local development.
 - Frontend validation improves user experience, but backend validation is still the source of truth.
 - Refresh-after-write is easy to reason about because the backend remains the authority for ordering, IDs, and timestamps.
 - Optimistic UI updates can feel faster, but they add rollback complexity and are not needed yet.
@@ -71,7 +70,7 @@ npm run build passed
 - The frontend now performs both read and write API calls against a FastAPI backend.
 - The implementation uses controlled React forms for predictable form state.
 - API errors and validation errors are surfaced in the UI instead of failing silently.
-- The phase intentionally avoids authentication scope creep by using seeded development users until the auth phase.
+- The phase focuses on write flows instead of identity plumbing.
 - The app keeps Docker Compose as the reproducible local development baseline.
 
 ## Quiz
@@ -104,8 +103,3 @@ npm run build passed
 2. Where are frontend dependencies installed during the normal Compose workflow?
 3. Which command runs the containerized frontend lint and production build checks?
 4. What should you check first if the frontend cannot reach `/api/posts`?
-
-## Follow-up Tasks
-
-- Smoke test creating a post and a comment through `dev-start.cmd`.
-- Replace the seeded-user selector with real Microsoft Entra sign-in during the authentication phase.

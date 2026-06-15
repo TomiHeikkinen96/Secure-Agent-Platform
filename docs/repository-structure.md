@@ -1,60 +1,33 @@
 # Repository Structure
 
-Planned structure:
+See [README.md](../README.md) for current local commands.
 
-```text
-.
-|-- AGENTS.md
-|-- README.md
-|-- docs/
-|   |-- plan.md
-|   |-- architecture.md
-|   |-- workflow.md
-|   |-- repository-structure.md
-|   |-- templates/
-|   |   `-- phase_template.md
-|   `-- phases/
-|       `-- phase00_agentic_workflow_setup.md
-|-- frontend/
-|-- backend/
-|-- database/
-|-- docker/
-`-- .github/
-    `-- workflows/
-```
-
-Application directories should be created when their phase begins.
-
-Reasons:
-
-- React setup should use the official Vite initialization flow.
-- Backend structure should be introduced alongside FastAPI concepts.
-- Docker Compose should be introduced when there are services to orchestrate.
-- GitHub Actions should be introduced when there is something meaningful to verify.
-
-## Planned Directories
-
-`frontend/`
-
-React application. Expected to start with Vite.
+## Directory Responsibilities
 
 `backend/`
 
-FastAPI application, tests, dependency management, and API documentation.
+FastAPI application code, backend tests, database models, schemas, routers, and migrations.
+
+`frontend/`
+
+React application code and frontend package metadata.
 
 `database/`
 
-Schema, migrations, seed data, and database notes.
+Database notes and local SQL Server documentation.
 
-`docker/`
+`docs/`
 
-Dockerfiles and supporting container configuration if they are not better placed near each service.
-
-`.github/workflows/`
-
-CI/CD workflows.
+Project roadmap, architecture notes, workflow notes, reusable templates, and phase summaries.
 
 `docs/phases/`
 
-Phase summaries, lessons, quizzes, and portfolio talking points.
+Historical phase summaries, lessons, verification notes, quizzes, and portfolio talking points.
 
+`scripts/`
+
+PowerShell helpers used by root command wrappers.
+
+`.github/workflows/`
+
+CI/CD workflows when automation is introduced.

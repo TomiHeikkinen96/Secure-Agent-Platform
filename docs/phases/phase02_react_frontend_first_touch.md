@@ -120,9 +120,3 @@ docker compose run --rm --no-deps frontend sh -c "npm install && npm run lint &&
 5. Why did the API explorer show a backend error before the local database was created and migrated?
 6. Which command confirms that the frontend production build succeeds?
 7. What is the difference between `start-dev.cmd` and `scripts/reset-local-data.ps1`?
-
-## Follow-up Tasks
-
-- Add create-post and create-comment forms after the read-only data flow is understood.
-- Decide how production frontend hosting will route API requests to the backend.
-- Add frontend component tests after the first React data-flow lesson is complete.
