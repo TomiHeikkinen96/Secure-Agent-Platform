@@ -24,6 +24,7 @@ pnpm-debug.log*
 
 # Docker and local data
 *.log
+log.txt
 docker-data/
 
 # IDEs and OS files
@@ -31,4 +32,3 @@ docker-data/
 .vscode/
 .DS_Store
 Thumbs.db
-

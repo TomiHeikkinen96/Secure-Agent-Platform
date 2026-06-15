@@ -1,595 +1,343 @@
-# Azure AI Community Board
+# Azure AI Community Board Plan
 
 ## Goal
 
-Build a small Azure-hosted social application that demonstrates:
+Build a small Azure-hosted community board that demonstrates modern full-stack and AI application development.
 
-* Full-stack development
-* Authentication
-* Authorization
-* Azure cloud services
-* Containerization
-* AI integration
-* RAG
-* Monitoring
-* Scalability concepts
-* Kubernetes basics
+The application stays intentionally small. The learning goal is to understand and explain the stack:
 
-The application is intentionally simple.
+- React frontend
+- FastAPI backend
+- SQL Server locally and Azure SQL in the cloud
+- Docker and Docker Compose
+- Microsoft Entra ID authentication
+- Authorization with roles
+- Azure App Service deployment
+- Azure Key Vault and managed identity
+- Azure AI Foundry integration
+- Basic RAG
+- Application Insights monitoring
+- Later AKS deployment concepts
 
-The goal is not business complexity.
+## Target Architecture
 
-The goal is learning Azure and understanding how modern AI applications are built.
+```mermaid
+flowchart LR
+    User["User Browser"] --> Frontend["React Frontend"]
+    Frontend --> Backend["FastAPI Backend"]
+    Backend --> Db["Azure SQL / Local SQL Server"]
+    Frontend --> Entra["Microsoft Entra ID"]
+    Backend --> Entra
+    Backend --> Foundry["Azure AI Foundry"]
+    Backend --> Search["Azure AI Search"]
+    Backend --> Vault["Azure Key Vault"]
+    Backend --> Monitor["Application Insights"]
+```
 
----
+## Application Scope
 
-# High-Level Architecture
-
-Frontend:
-
-* React
-
-Backend:
-
-* FastAPI
-
-Database:
-
-* Azure SQL
-
-Authentication:
-
-* Microsoft Entra ID
-
-AI:
-
-* Azure AI Foundry
-
-RAG:
-
-* Azure AI Search (later)
-
-Monitoring:
-
-* Azure Monitor
-* Application Insights
-
-Secrets:
-
-* Azure Key Vault
-
-Containerization:
-
-* Docker
-
-Orchestration:
-
-* Kubernetes (final phase)
-
-Source Control:
-
-* GitHub
-
----
-
-# Application Features
-
-## Users
+The app is a tiny authenticated community board.
 
 Users can:
 
-* Login with Microsoft account
-* View profile
-* View other users
+- sign in with Microsoft Entra ID
+- view a feed
+- create posts
+- comment on posts
+- use small AI actions on posts
 
-Stored information:
+Admins can:
 
-* Name
-* Email
-* Avatar
-* Role
+- view basic app metrics
+- access admin-only routes or screens
 
-Roles:
+Future AI features:
 
-* User
-* Admin
+- generate a short suggested comment
+- summarize a discussion
+- analyze an author's previous activity with a small RAG flow
 
----
+## Current Baseline
 
-## Community Feed
+Completed:
 
-Every authenticated user can:
+- Phase 00: repository workflow and agent instructions
+- Phase 01: FastAPI backend, SQL Server container, migrations, seed data
+- Phase 02: Vite React frontend, read-only API explorer, standardized local launcher
 
-* Create post
-* Like post
-* Comment on post
+Standard local start:
 
-Think:
+```text
+start-dev.cmd
+```
 
-Tiny Teams channel
+The launcher is the supported local workflow. It starts Docker Compose, creates/migrates/seeds the local database, opens the frontend, and cleans up containers with `Ctrl+C`.
 
-Tiny Facebook feed
+## Phase Roadmap
 
-Tiny Reddit thread
+### Phase 03 - Frontend Write Flows
 
----
-
-## AI Button
-
-Every post contains:
-
-"Ask AI"
-
-Examples:
-
-* Summarize discussion
-* Roast the author
-* Generate a positive comment
-* Generate a snarky comment
-
-The response should be intentionally short.
-
-Goal:
-
-Learn AI Foundry API integration.
-
----
-
-## RAG Feature
-
-User clicks:
-
-"Analyze Author"
-
-Backend retrieves:
-
-* Author profile
-* Previous posts
-* Previous comments
-
-Prompt:
-
-"Based on this user's activity, generate a humorous observation."
-
-This teaches:
-
-* Retrieval
-* Context injection
-* Prompt engineering
-
-without requiring a large document system.
-
----
-
-## Admin Dashboard
-
-Admin can view:
-
-* Total users
-* Total posts
-* Total comments
-* AI requests
-* Failed AI requests
-
-Simple charts optional.
-
----
-
-# Phase 0 – Local Development Setup
-
-Goal:
-
-Learn the local full-stack toolchain and Docker workflow.
-
-Application infrastructure should run in containers where practical, especially the database.
-
-Local Node.js and Python tooling is allowed when it helps learning.
-
-Repository:
-
-/frontend
-/backend
-/database
-/docker
-
-Setup:
-
-Start with toolchain checks and official init commands.
-
-Use Docker Compose for local services.
-
-Services:
-
-* React
-* FastAPI
-* SQL Server container
-
-Learning:
-
-* Docker
-* Networking
-* Environment variables
-
-Deliverable:
-
-Entire application runs with one command.
-
----
-
-# Phase 1 – Backend Foundation
-
-Build FastAPI backend.
-
-Learn:
-
-* Routing
-* Dependency injection
-* Pydantic
-* SQLAlchemy
-
-Create:
-
-POST /posts
-
-GET /posts
-
-POST /comments
-
-GET /comments
-
-GET /users
-
-Deliverable:
-
-Swagger UI works.
-
-Database stores data.
-
----
-
-# Phase 2 – React Frontend
+Goal: make the read-only frontend interactive without adding real authentication yet.
 
 Build:
 
-* Login screen placeholder
-* Feed page
-* Post form
-* Comments
-
-No authentication yet.
-
-Learning:
-
-* React
-* Components
-* State management
-* API calls
-
-Deliverable:
-
-Working feed.
-
----
-
-# Phase 3 – Authentication
-
-Add Microsoft Entra ID.
+- seeded-user selector as a development stand-in for login
+- create-post form
+- create-comment form
+- validation and API error display
+- refresh or local state update after successful writes
 
 Learn:
 
-* OAuth
-* OpenID Connect
-* Access tokens
-* ID tokens
-
-Backend:
-
-Validate tokens.
-
-Frontend:
-
-Require login.
-
-Store user information.
+- React forms
+- controlled inputs
+- POST requests
+- API validation errors
+- frontend state update choices
 
 Deliverable:
 
-User can sign in using Microsoft account.
+- A user can create posts and comments through the React UI using existing backend endpoints.
 
----
+### Phase 04 - Auth Concepts Spike
 
-# Phase 4 – Authorization
-
-Create roles.
-
-User:
-
-* Create posts
-
-Admin:
-
-* View metrics
+Goal: understand the authentication model before implementing it.
 
 Learn:
 
-* Claims
-* Role checks
-* Authorization policies
+- OAuth 2.0 versus OpenID Connect
+- ID tokens versus access tokens
+- authorization code flow with PKCE
+- frontend responsibility versus backend responsibility
+- how Microsoft Entra ID fits into the app
+- what claims the backend should trust
+
+Build:
+
+- short auth design note
+- proposed local and cloud auth flow diagrams
+- list of required Entra app registration settings
 
 Deliverable:
 
-Admin page hidden from normal users.
+- A documented plan for real Entra authentication.
 
----
+### Phase 05 - Microsoft Entra Authentication
 
-# Phase 5 – Azure Deployment
+Goal: add real sign-in.
 
-Deploy:
+Build:
 
-Frontend:
-
-* Azure App Service
-
-Backend:
-
-* Azure App Service
-
-Database:
-
-* Azure SQL
-
-Learning:
-
-* Resource groups
-* App services
-* Networking
-* Configuration
-
-Deliverable:
-
-Application accessible publicly.
-
----
-
-# Phase 6 – Azure Key Vault
-
-Move secrets:
-
-* Database password
-* AI keys
-
-Learning:
-
-* Secret management
-* Managed identities
-
-Deliverable:
-
-No secrets stored in code.
-
----
-
-# Phase 7 – AI Foundry
-
-Create Foundry project.
-
-Add:
-
-POST /ai/comment
-
-Prompt examples:
-
-"Create a humorous reply."
-
-"Create a positive reply."
-
-"Summarize this discussion."
-
-Learning:
-
-* Azure AI Foundry
-* Model deployment
-* Prompting
-* Cost awareness
-
-Deliverable:
-
-AI-generated comments.
-
----
-
-# Phase 8 – RAG
-
-Create retrieval flow.
-
-Retrieve:
-
-* User profile
-* User posts
-* User comments
-
-Build prompt:
-
-Context:
-[retrieved information]
-
-Question:
-"What funny observation can you make?"
-
-Learning:
-
-* Retrieval
-* Context windows
-* Grounding
-
-Deliverable:
-
-Basic social-media RAG.
-
----
-
-# Phase 9 – Rate Limiting
-
-Implement:
-
-5 requests per minute
-
-Examples:
-
-AI endpoints
-
-Post creation endpoints
-
-Learning:
-
-* Abuse prevention
-* API protection
-* HTTP 429
-
-Deliverable:
-
-Rate limit visible and testable.
-
----
-
-# Phase 10 – Monitoring
-
-Add:
-
-Application Insights
-
-Track:
-
-* Requests
-* Errors
-* AI calls
-* AI failures
-
-Learning:
-
-* Observability
-* Production diagnostics
-
-Deliverable:
-
-Metrics visible in Azure.
-
----
-
-# Phase 11 – Basic Security Review
-
-Review:
-
-* OWASP Top 10
-* Authentication flow
-* SQL injection
-* Secrets handling
-
-Test:
-
-* Invalid JWT
-* Missing roles
-* Rate-limit bypass attempts
-
-Deliverable:
-
-Security notes document.
-
----
-
-# Phase 12 – Kubernetes
-
-Only after everything works.
-
-Deploy application to AKS.
+- frontend login/logout with Microsoft Entra ID
+- backend access-token validation
+- current-user endpoint
+- database user mapping from Entra claims
+- replacement of the seeded-user selector
 
 Learn:
 
-* Pods
-* Deployments
-* Services
-* Ingress
-
-Do NOT redesign application.
-
-Simply migrate.
-
-Learning goal:
-
-Understand Kubernetes deployment model.
-
-Not become a Kubernetes expert.
+- OIDC login flow
+- access token validation
+- JWKS/signing keys
+- claims mapping
+- local development auth configuration
 
 Deliverable:
 
-Application running on AKS.
+- Users can sign in with Microsoft Entra ID and create content as themselves.
 
----
+### Phase 06 - Authorization
 
-# Interview Talking Points
+Goal: protect actions and screens by role.
 
-Authentication:
+Build:
 
-* OAuth
-* Entra ID
-* Token validation
+- user/admin roles
+- backend authorization checks
+- frontend conditional navigation
+- simple admin metrics screen
 
-Backend:
+Learn:
 
-* FastAPI
-* SQLAlchemy
-* REST APIs
+- authentication versus authorization
+- role checks
+- claims and database roles
+- API protection even when UI hides controls
 
-Cloud:
+Deliverable:
 
-* Azure SQL
-* App Service
-* Key Vault
-* Application Insights
+- Admin-only functionality is hidden in the UI and enforced by the backend.
 
-AI:
+### Phase 07 - Azure Deployment Baseline
 
-* Azure AI Foundry
-* Prompt engineering
-* RAG
+Goal: deploy the working app without adding extra cloud complexity yet.
 
-Security:
+Build:
 
-* Authorization
-* Secret management
-* Rate limiting
+- Azure resource group
+- Azure SQL database
+- App Service deployment for backend
+- App Service or Static Web App-style hosting decision for frontend
+- production app settings
 
-Containers:
+Learn:
 
-* Docker
-* Docker Compose
+- Azure resource lifecycle
+- local SQL Server versus Azure SQL
+- App Service configuration
+- networking basics
+- cost and cleanup
 
-Scalability:
+Deliverable:
 
-* Stateless backend
-* Horizontal scaling
-* AKS migration path
+- The application is reachable in Azure with documented cleanup steps.
 
-Monitoring:
+### Phase 08 - Key Vault and Managed Identity
 
-* Application Insights
-* Logging
-* Metrics
+Goal: move secrets out of plain app settings where practical.
 
----
+Build:
 
-# Success Criteria
+- Azure Key Vault
+- managed identity for deployed services
+- Key Vault references or runtime secret loading
+- documented secret rotation/reset notes
 
-If completed, I should be able to explain:
+Learn:
 
-* How OAuth works
-* How Azure authentication works
-* How Docker containers communicate
-* How APIs connect to databases
-* How Azure SQL differs from local SQL
-* How AI Foundry APIs are called
-* How RAG works in production
-* How rate limiting protects APIs
-* How secrets should be stored
-* Why Kubernetes exists
-* How cloud applications scale
+- secret management
+- managed identity
+- least privilege
+- local versus cloud configuration
+
+Deliverable:
+
+- Production secrets are managed through Azure rather than committed files or ad hoc local notes.
+
+### Phase 09 - Azure AI Foundry
+
+Goal: add the first AI feature.
+
+Build:
+
+- Foundry project/model deployment
+- backend AI endpoint
+- frontend "Ask AI" action on a post
+- simple cost/error handling
+
+Learn:
+
+- model deployment
+- prompt construction
+- API keys or managed identity path
+- cost awareness
+- handling AI failures
+
+Deliverable:
+
+- A post can trigger a short AI-generated response.
+
+### Phase 10 - Basic RAG
+
+Goal: teach retrieval and context injection without building a large document system.
+
+Build:
+
+- retrieve author profile, posts, and comments
+- build a grounded prompt from retrieved records
+- optionally introduce Azure AI Search if it adds learning value at this point
+
+Learn:
+
+- retrieval versus generation
+- context windows
+- grounding
+- when a search service is useful versus overkill
+
+Deliverable:
+
+- "Analyze Author" produces a short response based on stored app data.
+
+### Phase 11 - Monitoring
+
+Goal: make runtime behavior visible.
+
+Build:
+
+- Application Insights
+- request/error tracking
+- AI call tracking
+- basic dashboard or query notes
+
+Learn:
+
+- logs versus metrics versus traces
+- production diagnostics
+- failure visibility
+
+Deliverable:
+
+- Requests, errors, and AI calls are visible in Azure monitoring.
+
+### Phase 12 - Security and Rate Limiting
+
+Goal: review the app as a deployed system.
+
+Build:
+
+- basic rate limiting for write/AI endpoints
+- invalid-token tests
+- missing-role tests
+- security notes document
+
+Learn:
+
+- OWASP-style review
+- API abuse prevention
+- HTTP 401/403/429 behavior
+- why UI checks are not enough
+
+Deliverable:
+
+- The app has basic abuse protection and documented security tradeoffs.
+
+### Phase 13 - AKS Migration
+
+Goal: understand Kubernetes deployment concepts after the app already works.
+
+Build:
+
+- container images for frontend/backend as needed
+- Kubernetes manifests or Helm basics
+- AKS deployment
+- service/ingress explanation
+
+Learn:
+
+- pods
+- deployments
+- services
+- ingress
+- why Kubernetes exists
+
+Deliverable:
+
+- The existing app runs on AKS without redesigning the product.
+
+## Success Criteria
+
+By the end, I should be able to explain:
+
+- how React calls a backend API
+- how FastAPI routes connect to database code
+- how Docker Compose services communicate
+- how local SQL Server maps to Azure SQL
+- how OAuth/OIDC and Entra ID authentication work
+- how access tokens are validated by a backend
+- how roles are enforced
+- how Azure App Service hosts the app
+- how Key Vault and managed identity reduce secret risk
+- how Azure AI Foundry is called safely
+- how basic RAG differs from a plain AI prompt
+- how monitoring helps diagnose production issues
+- why AKS changes deployment mechanics without changing the app's core behavior

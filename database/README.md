@@ -4,67 +4,7 @@ The local development database is SQL Server running in Docker Compose. This kee
 
 ## Local Database Lifecycle
 
-Create a local `.env` first:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Then edit `.env` so `MSSQL_SA_PASSWORD` and `MSSQL_PASSWORD` match. SQL Server requires a strong password.
-
-Build the backend image:
-
-```powershell
-docker compose build backend
-```
-
-Start only the database:
-
-```powershell
-docker compose up -d db
-```
-
-Create the application database after SQL Server is running:
-
-```powershell
-docker compose run --rm backend python -m app.db.create_database
-```
-
-Apply schema migrations:
-
-```powershell
-docker compose run --rm backend alembic upgrade head
-```
-
-Seed development data:
-
-```powershell
-docker compose run --rm backend python -m app.seed_dev
-```
-
-Start the backend API:
-
-```powershell
-docker compose up backend
-```
-
-Open Swagger UI:
-
-```text
-http://localhost:8000/docs
-```
-
-Stop services while keeping data:
-
-```powershell
-docker compose down
-```
-
-Stop services and delete the local SQL Server volume:
-
-```powershell
-docker compose down -v
-```
+Use the root README for the standard local start, stop, and reset workflow. The launcher is the supported path because it creates the database, applies migrations, loads seed data, and starts the frontend/backend stack consistently.
 
 The persistent local database files are stored in the Docker named volume `sqlserver-data`, mounted to `/var/opt/mssql` inside the SQL Server container.
 
@@ -99,10 +39,4 @@ Good rule of thumb:
 
 ## Development Seed Data
 
-Development seed data is created by the backend helper:
-
-```powershell
-docker compose run --rm backend python -m app.seed_dev
-```
-
-The seed helper refuses to run unless `APP_ENV=development`.
+Development seed data is created by `backend/app/seed_dev.py`. The launcher runs it automatically, and the helper refuses to run unless `APP_ENV=development`.
